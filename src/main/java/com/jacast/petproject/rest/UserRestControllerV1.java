@@ -1,10 +1,7 @@
 package com.jacast.petproject.rest;
 
 import com.jacast.petproject.model.User_;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +26,17 @@ public class UserRestControllerV1 {
         return Users.stream().filter(user_ -> user_.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @PostMapping
+    public User_ create(@RequestBody User_ user_){
+        this.Users.add(user_);
+        return user_;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id){
+        this.Users.removeIf(user_ -> user_.getId().equals(id));
     }
 
 }
